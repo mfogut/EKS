@@ -1,0 +1,29 @@
+#Give full access to k8s-cluster-admin user
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  namespace: production
+  name: k8s-cluster-admin
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+
+---
+# This role binding allows "k8s-cluster-admin" to full access in the "production" namespace.
+# You need to already have a Role named "k8s-cluster-admin" in that namespace.
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: k8s-cluster-admin-binding
+  namespace: production
+subjects:
+# You can specify more than one "subject"
+- kind: User
+  name: k8s-cluster-admin # "name" is case sensitive
+  apiGroup: "" #Give access all the "apiGroup"
+roleRef:
+  # "roleRef" specifies the binding to a Role / ClusterRole
+  kind: Role #this must be Role or ClusterRole
+  name: k8s-cluster-admin # this must match the name of the Role you wish to bind to
+  apiGroup: "" #Give access all the "apiGroup"
