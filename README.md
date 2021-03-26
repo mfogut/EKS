@@ -59,3 +59,15 @@
 - 7 - Verify deployment and service for influxdb
     - kubectl get deployment -n kube-system
     - kubectl get svc -n kube-system
+- 8 - Create deployment and service for heapster. See deploy-heapster.yaml and serive-heapster.yaml
+    - kubectl apply -f deploy-heapster.yaml
+    - kubectl apply -f service-heapster.yaml
+- 9 - Verify if deployment Running
+    - kubectl get deployment -n kube-system
+    - ![](heapster_error.jpg)
+ # DEBUG HEAPSTER
+- 1 - Describe heapster deployment
+    - kubectl describe deploy heapster -n kube-system
+ ## Solution : Create ServiceAccount for heapster. See deploy-heapster-rbac.yaml
+ - 2 - Delete heapster deployment and deploy again.
+ - 3 - Verify if deployment running.
