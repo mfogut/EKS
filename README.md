@@ -64,7 +64,7 @@
     - kubectl apply -f service-heapster.yaml
 - 9 - Verify if deployment Running
     - kubectl get deployment -n kube-system
-    - ![](heapster_error.jpg)
+    - ![](heapster_error.JPG)
  # DEBUG HEAPSTER
 - 1 - Describe heapster deployment
     - kubectl describe deploy heapster -n kube-system
