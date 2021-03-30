@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kube-system
+  name: kubernetes-dashboard-service
+  labels:
+    app: kubernetes-dashboard-service
+spec:
+  selector:
+    app: kubernetes-dashboard
+  ports:
+  - port: 443 
+    targetPort: 8443
