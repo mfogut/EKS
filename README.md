@@ -11,7 +11,8 @@
 - 4 - Create IAM Role to enable connection between Cloudwatch and EKS Cluster with Cloudwatch permission.
     - ![](cloudwatch_role.JPG)
 
-- 5 - curl -s https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluentd-quickstart.yaml | sed "s/{{cluster_name}}/demo-cluster/;s/{{region_name}}/us-east-1/" | kubectl apply -f -
+- 5 - 
+    - curl -s https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluentd-quickstart.yaml | sed "s/{{cluster_name}}/demo-cluster/;s/{{region_name}}/us-east-1/" | kubectl apply -f -
 - 6 - List namespace
     - kubectl get ns
 - 7 - kubectl get all -n amazon-cloudwatch
@@ -66,8 +67,21 @@
     - kubectl get deployment -n kube-system
     - ![](heapster_error.JPG)
  # DEBUG HEAPSTER
-- 1 - Describe heapster deployment
-    - kubectl describe deploy heapster -n kube-system
+    - a - Describe heapster deployment
+        - kubectl describe deploy heapster -n kube-system
  ## Solution : Create ServiceAccount for heapster. See deploy-heapster-rbac.yaml
- - 2 - Delete heapster deployment and deploy again.
- - 3 - Verify if deployment running.
+    - b - Delete heapster deployment and deploy again.
+    - c - Verify if deployment running.
+- 10 - Create service account for dashboard. See dashboard-account-rbac.yaml
+    - kubectl apply -f dashboard-account-rbac.yaml
+- 11 - Create deployment and service for dashboard.
+    - kubectl apply -f deploy-dashboard.yaml
+    - kubectl apply -f service-dashboard.yaml
+- 12 - Get tokens in order to connect dashboard
+    - kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}')
+- 13 - Start kube proxy.
+    - kubectl proxy
+- 14 - Access Kuburnetes Dashboard with following link
+    - http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+
+    - ![](dashboard.JPG)
